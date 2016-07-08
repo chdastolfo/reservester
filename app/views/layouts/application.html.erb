@@ -9,6 +9,16 @@
   </head>
 
   <body>
+  	<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a href="#" class="brand">Reservester</a>
+			<ul class="nav">
+				<li><%= link_to "All Restaurants", restaurants_path %></li>
+			</ul>
+		</div>
+	</div>
+</div>	
     <%= yield %>
   </body>
 </html>

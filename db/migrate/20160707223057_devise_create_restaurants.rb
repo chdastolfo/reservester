@@ -2,6 +2,7 @@ class DeviseCreateRestaurants < ActiveRecord::Migration[5.0]
   def change
     create_table :restaurants do |t|
       ## Database authenticatable
+      t.belongs_to :owners
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
