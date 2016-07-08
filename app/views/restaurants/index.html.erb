@@ -1,0 +1,20 @@
+<div class="page-header">
+   <h1>Restaurants are cool, you should eat at them.</h1>
+</div>
+
+<%= link_to "Add New Restaurant", new_restaurant_path, class: "btn btn-success" %>
+
+<% @restaurants.each do |restaurant| %>
+   
+   <div class="restaurant">
+    <strong></strong>
+    <p><%= restaurant.content %></p> 
+    <div class="meta">
+      <span class="admin">
+        | <%= link_to "Edit", edit_restaurant_path(restaurant) %> |
+        <%= link_to "Delete", restaurant, method: :delete, data: { confirm: "Are you sure you want to remove this restaurant from the directory?"} %>
+      </span>
+    </div>
+   </div>
+
+<% end %>
