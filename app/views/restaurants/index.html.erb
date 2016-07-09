@@ -8,14 +8,22 @@
 <% @restaurants.each do |restaurant| %>
    
    <div class="restaurant">
+    <% if owner_signed_in? %>
+    Logged in as <b><%=current_owner.email %></b>
     <strong><%= restaurant.name %></strong>
     <p><%= restaurant.content %></p> 
+    <%= link_to 'Edit profile', edit_owner_registration_path %>
+    <%= link_to 'Logout', destroy_owner_session_path %>
     <div class="meta">
       <span class="admin">
         | <%= link_to "Edit", edit_restaurant_path(restaurant) %> |
-        <%= link_to "Delete", restaurants, method: :delete, data: { confirm: "Are you sure you want to remove this restaurant from the directory?"} %>
+        <%= link_to "Delete", restaurant, method: :delete, data: { confirm: "Are you sure you want to remove this restaurant from the directory?"} %>
       </span>
     </div>
    </div>
+   <% else %>
+   <%= link_to 'Sign up', new_owner_registration_path %>
+   <%= link_to 'Login', new_owner_session_path %>
 
+<% end %>
 <% end %>
