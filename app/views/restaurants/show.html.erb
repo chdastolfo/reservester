@@ -1,15 +1,22 @@
-<p id="notice"><%= notice %></p>
 
-	<b>Name:</b>
-		<%= @restaurant.name %>
-	</p>
 
-	<b>Owner:</b>
-		<%= @restaurant.owner_id %>
-	</p>
 
-	<p>
-		<b>Description:</b>
-		<%= @restaurant.description %>
-	</p>
+<p>
+	<strong>Name:</strong>
+	<%= @restaurants.name %>
+</p>
+
+<p>
+	<strong>Description:</strong>
+	<%= @restaurants.content %>
+</p>
+
+<p>
+	<strong>Address:</strong>
+	<%= @restaurants.address %>
+</p>
+
+
+
+
 <%= link_to 'Back', restaurants_path %>
