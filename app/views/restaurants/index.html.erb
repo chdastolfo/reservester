@@ -4,7 +4,6 @@
 
 <%= link_to "Add New Restaurant", new_restaurant_path, class: "btn btn-success" %>
 
-<% @restaurants.each do |restaurant| %>
    
    <div class="restaurant">
     <% if owner_signed_in? %>
@@ -24,5 +23,5 @@
    <%= link_to 'Sign up', new_owner_registration_path %>
    <%= link_to 'Login', new_owner_session_path %>
 
-<% end %>
+
 <% end %>
