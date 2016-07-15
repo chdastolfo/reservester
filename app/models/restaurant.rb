@@ -7,4 +7,7 @@ class Restaurant < ApplicationRecord
   #attr_accessor :content, :owner_id
 
   belongs_to :owner
+
+  has_many :reservations, through: :owners
+  accepts_nested_attributes_for :reservations
 end

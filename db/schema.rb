@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160710000025) do
+ActiveRecord::Schema.define(version: 20160711134341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,19 +28,34 @@ ActiveRecord::Schema.define(version: 20160710000025) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "reservations_id"
     t.index ["email"], name: "index_owners_on_email", unique: true, using: :btree
+    t.index ["reservations_id"], name: "index_owners_on_reservations_id", using: :btree
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "restaurants", force: :cascade do |t|
+  create_table "reservations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "datetime"
+    t.string   "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.text     "content"
     t.integer  "owner_id"
     t.string   "address"
     t.string   "name"
+    t.integer  "reservations_id"
     t.index ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
+    t.index ["reservations_id"], name: "index_restaurants_on_reservations_id", using: :btree
   end
 
+  add_foreign_key "owners", "reservations", column: "reservations_id"
   add_foreign_key "restaurants", "owners"
+  add_foreign_key "restaurants", "reservations", column: "reservations_id"
 end

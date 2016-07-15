@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  datetime: 2016-07-11 09:15:09
+  message: MyString
+  belongs_to: 
+
+two:
+  email: MyString
+  datetime: 2016-07-11 09:15:09
+  message: MyString
+  belongs_to: 
