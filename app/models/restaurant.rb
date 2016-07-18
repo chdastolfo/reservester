@@ -4,10 +4,13 @@ class Restaurant < ApplicationRecord
   #devise :database_authenticatable, :registerable,
    #      :recoverable, :rememberable, :trackable, :validatable
 
-  #attr_accessor :content, :owner_id
 
   belongs_to :owner
 
-  has_many :reservations, through: :owners
+  has_many :reservations, dependent: :destroy
   accepts_nested_attributes_for :reservations
+
+  def reservation
+  	@reservation = Reservation.new
+  end
 end

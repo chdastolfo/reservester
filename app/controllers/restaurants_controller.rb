@@ -23,7 +23,8 @@ def create
 end
 
 def show
-	#@restaurant = Restaurant.find(params[:id])
+	@restaurant = current_owner.restaurants.find(params[:id])
+	@reservation = Reservation.new
 end
 
 def edit
