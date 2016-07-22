@@ -45,7 +45,6 @@
           <b><%= link_to restaurant.name, restaurant_path(restaurant) %></b>
           <p><%= restaurant.address %></p> 
           <p><%= restaurant.content %></p> 
-      <%= link_to "favorite",   favorite_restaurant_path(restaurant, type: "favorite"), method: :put,  :remote => true %>
       <%= link_to "unfavorite", favorite_restaurant_path(restaurant, type: "unfavorite"), method: :put, :remote => true %>
   <% end %>
 </table>

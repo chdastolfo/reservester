@@ -24,6 +24,6 @@ Rails.application.routes.draw do
   end
 
   resources :restaurants do
-    put :favorite, on: :member
+    resource :favorites, only: [:create, :destroy]
   end
 end

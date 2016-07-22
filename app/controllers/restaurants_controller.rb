@@ -21,7 +21,7 @@ def create
 end
 
 def show
-	@restaurant = current_user.restaurants.find(params[:id])
+	@restaurant = Restaurant.find(params[:id])
 	@reservation = Reservation.new
 end
 
@@ -69,7 +69,7 @@ private
 
      # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(_user_id, :name, :content, :address)
+      params.require(:restaurant).permit(:owner_id, :name, :content, :address)
     end
 
 end
