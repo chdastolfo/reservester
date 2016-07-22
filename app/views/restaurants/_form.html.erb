@@ -19,7 +19,7 @@
          <%= f.text_area :content %>
        </div>
 
-       <%= f.hidden_field :owner_id, value: current_owner.id %>
+       <%= f.hidden_field :user_id, value: current_user.id %>
 
      <div class="modal-footer">
        <%= f.submit class: "btn btn-primary" %>

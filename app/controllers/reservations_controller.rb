@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
-	before_action :authenticate_owner!, :except => [:index, :show]
+	before_action :authenticate_user!, :except => [:index, :show]
+	before_action :set_restaurant
 	
 	def new
 		@reservation = Reservation.new
@@ -10,7 +11,7 @@ class ReservationsController < ApplicationController
 	end
 
 	def create
-		@reservation = Reservation.all
+		#@reservation = Reservation.all
 		@reservation = Reservation.create(reservation_params)
 		if @reservation.save
 			ReservationMailer.reservation_notification(@reservation).deliver
@@ -26,8 +27,12 @@ class ReservationsController < ApplicationController
 		resdirect to @reservation.restaurants
 	end
 
-	private
+private
 	def reservation_params
 		params.require(:reservation).permit(:email, :datetime, :message, :restaurant_id)
-end
+	end
+
+	def set_restaurant
+		@restaurant = Restaurant.find(params[:restaurant_id])
+	end
 end

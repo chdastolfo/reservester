@@ -1,19 +1,17 @@
 class RestaurantsController < ApplicationController
-	
-	before_action :authenticate_owner!, except: [:show, :index]
-	before_action :set_restaurant, only: [:show]
+	before_action :authenticate_user!, except: [:show, :index]
 
 def index
 	@restaurants = Restaurant.all
 end
 
 def new
-	@restaurants = current_owner.restaurants.new
+	@restaurants = current_user.restaurants.new
 end
 
 def create
 	@restaurants = Restaurant.new(restaurant_params)
-	@restaurants = current_owner.restaurants.new(restaurant_params)
+	@restaurants = current_user.restaurants.new(restaurant_params)
 	if @restaurants.save
 		flash[:success] = "Restaurant was created, bitch."
 		redirect_to @restaurants
@@ -23,26 +21,26 @@ def create
 end
 
 def show
-	@restaurant = current_owner.restaurants.find(params[:id])
+	@restaurant = current_user.restaurants.find(params[:id])
 	@reservation = Reservation.new
 end
 
 def edit
-	@restaurants = current_owner.restaurants.find(params[:id])
+	@restaurants = current_user.restaurants.find(params[:id])
 end
 
 def update
-	@restaurants = current_owner.restaurants.find(params[:id])
-	if @restaurants.update(restaurant_params)
+	@restaurant = current_user.restaurants.find(params[:id])
+	if @restaurant.update(restaurant_params)
 		flash[:success] = "Restaurant was updated, bitch."
-		redirect_to @restaurants
+		redirect_to @restaurant
 	else
 		render 'edit'
 	end
 end
 
 def destroy
-	@restaurants = current_owner.restaurants.find(params[:id])
+	@restaurants = current_user.restaurants.find(params[:id])
 	if @restaurants.destroy
 		flash[:danger] = "restaurant was deleted and stuff"
 	else
@@ -51,15 +49,25 @@ def destroy
 	redirect_to restaurants_path
 end
 
-private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_restaurant
-      @restaurants = Restaurant.find(params[:id])
-    end
+def favorite
+	@restaurant = current_user.restaurants.find(params[:id])
+	type = params[:type]
+	if type == "favorite"
+		current_user.favorite_restaurants << @restaurant
+		redirect_to :back, notice: "You favorited #{@restaurant.name}"
+	elsif type == "unfavorite"
+		current_user.favorite_restaurants.delete(@restaurant)
+		redirect_to :back, notice: "Unfavorited #{@restaurant.name}"
+	else
+		redirect_to :back, notice: "Nothing happened."
+	end
+end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+private
+
+     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(:owner_id, :name, :content, :address)
+      params.require(:restaurant).permit(_user_id, :name, :content, :address)
     end
 
 end
