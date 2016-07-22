@@ -1,21 +1,54 @@
+<% if current_user.role == "owner" %>
+
 <h1>
-    <%= @user.name %>'s Dashboard
+    <%= current_user.email %>'s Dashboard</h1>
     <div class="pull-right">
         <%= link_to new_user_restaurant_path(@user), :class => 'btn' do %>
             New Restaurant
         <%- end %>
+        <%= link_to "Add New Restaurant", new_restaurant_path, class: "btn btn-success" %>
     </div>
-</h1>
+<div class="meta">
+      <span class="admin">
+         <tr>
+        <th>Name</th>
+        <th></th>
+            </tr>
+            <%- @restaurants.each do |restaurant| %>
+            <tr>
+        | <%= link_to "Edit", edit_restaurant_path(restaurant) %> |
+        <%= link_to "Delete", restaurant, method: :delete, data: { confirm: "Are you sure you want to remove this restaurant from the directory?"} %>
+    </tr>
+      </span>
+   </div>
+    <%- end %>
+</table>
+<% end %>
+
+<% if current_user.role == "patron" %>
+
+    <h1>
+        <%= current_user.email %>'s Dashboard </h1>
+        <div>
+            <h2>Favorited Restaurants</h2>
+        </div>
+    
 
 <table class="table table-striped">
     <tr>
         <th>Name</th>
         <th></th>
     </tr>
-    <%- @restaurants.each do |restaurant| %>
-        <tr>
-            <td><%= link_to restaurant.name, restaurant %></td>
-            <td><%= link_to 'Remove', restaurant, :method => :delete, :confirm => "Are you sure that you want to remove #{restaurant.name}?" %></td>
-        </tr>
-    <%- end %>
+    <% @restaurants.each do |restaurant| %>
+       </br>
+        </br>
+          <b><%= link_to restaurant.name, restaurant_path(restaurant) %></b>
+          <p><%= restaurant.address %></p> 
+          <p><%= restaurant.content %></p> 
+      <%= link_to "favorite",   favorite_restaurant_path(restaurant, type: "favorite"), method: :put,  :remote => true %>
+      <%= link_to "unfavorite", favorite_restaurant_path(restaurant, type: "unfavorite"), method: :put, :remote => true %>
+  <% end %>
 </table>
+
+
+<% end %>

@@ -41,7 +41,7 @@ end
 
 def destroy
 	@restaurants = current_user.restaurants.find(params[:id])
-	if @restaurants.destroy
+	if @restaurant.destroy
 		flash[:danger] = "restaurant was deleted and stuff"
 	else
 		flash[:danger] = "restaurant was not deleted and stuff"
@@ -55,9 +55,11 @@ def favorite
 	if type == "favorite"
 		current_user.favorite_restaurants << @restaurant
 		redirect_to :back, notice: "You favorited #{@restaurant.name}"
+		format.js {}
 	elsif type == "unfavorite"
 		current_user.favorite_restaurants.delete(@restaurant)
 		redirect_to :back, notice: "Unfavorited #{@restaurant.name}"
+		format.js {}
 	else
 		redirect_to :back, notice: "Nothing happened."
 	end
