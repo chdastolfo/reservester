@@ -6,7 +6,7 @@ def index
 end
 
 def new
-	@restaurants = current_user.restaurants.new
+	@restaurant = Restaurant.new
 end
 
 def create
@@ -23,6 +23,7 @@ end
 def show
 	@restaurant = Restaurant.find(params[:id])
 	@reservation = Reservation.new
+	@reservation.restaurant = @restaurant
 end
 
 def edit
@@ -47,22 +48,6 @@ def destroy
 		flash[:danger] = "restaurant was not deleted and stuff"
 	end
 	redirect_to restaurants_path
-end
-
-def favorite
-	@restaurant = current_user.restaurants.find(params[:id])
-	type = params[:type]
-	if type == "favorite"
-		current_user.favorite_restaurants << @restaurant
-		redirect_to :back, notice: "You favorited #{@restaurant.name}"
-		format.js {}
-	elsif type == "unfavorite"
-		current_user.favorite_restaurants.delete(@restaurant)
-		redirect_to :back, notice: "Unfavorited #{@restaurant.name}"
-		format.js {}
-	else
-		redirect_to :back, notice: "Nothing happened."
-	end
 end
 
 private

@@ -24,4 +24,8 @@ validates_presence_of :role
 			role == "patron"
 		end
 
+def is_favorited?(restaurant)
+  favorited_restaurants.include?(restaurant)
+end
+
 end

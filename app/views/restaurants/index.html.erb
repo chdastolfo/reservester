@@ -2,25 +2,11 @@
    <h1>Restaurants are cool, you should eat at them.</h1>
 </div>
 
-<div class="restaurant">
-  <% if signed_in? %>
-    <% @restaurants.each do |restaurant| %>
-      <b><%= link_to restaurant.name, restaurant_path(restaurant) %></b>
-      <p><%= restaurant.address %></p> 
-      <p><%= restaurant.content %></p>
- 
-      <% if signed_in? and current_user.patron? %>
-        <%= link_to "favorite",   restaurant_favorites_path(@restaurants, type: "favorite"), method:    :post, :remote => true %>
-        <%= link_to "unfavorite", restaurant_favorites_path(@restaurants, type: "unfavorite"), method:  :delete, :remote => true %>
-      </br>
-      </br>
-      <% end %> 
-   <% end %>
+<div id="restaurants" class="restaurant">
+  <%= render 'restaurants/list', restaurants: @restaurants %>
 </div> 
 
 <% if not signed_in? %>
   <%= link_to 'Sign up', new_user_registration_path %>
   <%= link_to 'Login', new_user_session_path %>
-<% end %>
-
 <% end %>

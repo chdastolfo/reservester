@@ -6,8 +6,8 @@ class Restaurant < ApplicationRecord
 
   belongs_to :user
 
-  has_many :favorite_restaurants
-  has_many :favorited_by, through: :favorite_restaurants, source: :user
+  has_many :favorites
+  has_many :favorited_by, through: :favorites, source: :user
   
   has_many :reservations, dependent: :destroy
   accepts_nested_attributes_for :reservations
@@ -15,4 +15,9 @@ class Restaurant < ApplicationRecord
   def reservation
   	@reservation = Reservation.new
   end
+
+  def favorited_by?(user)
+    favorited_by.include?(user)
+  end
+
 end

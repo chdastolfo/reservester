@@ -1,0 +1,16 @@
+<% if signed_in? %>
+	<% restaurants.each do |restaurant| %>
+	  <b><%= link_to restaurant.name, restaurant_path(restaurant) %></b>
+	  <p><%= restaurant.address %></p> 
+	  <p><%= restaurant.content %></p>
+
+	  <% if signed_in? and current_user.patron? %>
+	  	<% if restaurant.favorited_by?(current_user) %>
+	    <%= link_to "unfavorite", restaurant_favorites_path(restaurant, type: "unfavorite"), method:  :delete, remote: true %>
+	    <% else %>
+	    <%= link_to "favorite", restaurant_favorites_path(restaurant, type: "favorite"), method: :post, remote: true %>
+	    <% end %>
+	  	</br>
+	  <% end %>
+	<% end %>
+<% end %>
