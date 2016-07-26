@@ -11,6 +11,7 @@ class Restaurant < ApplicationRecord
   
   has_many :reservations, dependent: :destroy
   accepts_nested_attributes_for :reservations
+  has_and_belongs_to_many :categories
 
   def reservation
   	@reservation = Reservation.new
@@ -18,6 +19,10 @@ class Restaurant < ApplicationRecord
 
   def favorited_by?(user)
     favorited_by.include?(user)
+  end
+
+  def exists?(reservation)
+    reservations.include?(reservation)
   end
 
 end

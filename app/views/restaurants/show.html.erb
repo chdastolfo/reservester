@@ -13,22 +13,16 @@
 	<%= @restaurant.address %>
 </p>
 
-<% if user_signed_in? %>
+<% if signed_in? %>
 	<h3>Reservations</h3>
-	<tr>
-		<th>Email</th>
-		<th>Reservation Time</th>
-		<th>Message</th>
-	</tr>
-
-	<% if @restaurant.reservation.present? %>
-		<% @restaurant.reservation do |reservation| %>
-			<tr>
-				<td><%= reservation.email %></td>
-				<td><%= reservation.datetime %></td>
-				<td><%= reservation.message %></td>
-			</tr>
-		<% end %>
+<% end %>
+<% if @reservation.restaurant.exists?(@reservation) %>
+	<% @reservation.restaurant do |reservation| %>
+		<tr>
+			<td><%= reservation.email %></td>
+			<td><%= reservation.datetime %></td>
+			<td><%= reservation.message %></td>
+		</tr>
 	<% end %>
 <% else %>
 	<% simple_form_for @reservation, html: { class: 'form-horizontal' } do |f| %>

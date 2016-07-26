@@ -1,8 +1,17 @@
 class ReservationsController < ApplicationController
+	before_filter :get_restaurant, only: [:show, :edit, :update, :destroy]
 	before_action :authenticate_user!, :except => [:index, :show]
 
+	def index
+		@reservations = Reservation.all
+	end
+
+	def show
+		get_restaurant
+		@reservation = Reservation.find(params[:restaurant_id])
+
 	def create
-		@restaurant = Restaurant.find params[:restaurant_id]
+		get_restaurant
 		@reservation = Reservation.new(reservation_params)
 		if @reservation.save
 			ReservationMailer.reservation_notification(@reservation).deliver
@@ -22,4 +31,11 @@ private
 	def reservation_params
 		params.require(:reservation).permit(:email, :datetime, :message, :restaurant_id)
 	end
+
+protected
+
+	def get_restaurant
+		@restaurant = Restaurant.find(params[:restaurant_id])
+	end
+
 end
