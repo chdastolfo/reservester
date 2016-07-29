@@ -7,15 +7,14 @@ class ReservationsController < ApplicationController
 	end
 
 	def show
-		get_restaurant
 		@reservation = Reservation.find(params[:restaurant_id])
+	end
 
 	def create
-		get_restaurant
 		@reservation = Reservation.new(reservation_params)
 		if @reservation.save
 			ReservationMailer.reservation_notification(@reservation).deliver
-			redirect_to @restaurant, :notice => 'You have successfully made a reservation.'
+			redirect_to reservations_path, :notice => 'You have successfully made a reservation.'
 		else
 			render 'restaurant/show', :notice => 'Something went wrong. Please try again.'
 		end
@@ -27,15 +26,16 @@ class ReservationsController < ApplicationController
 		resdirect to @reservation.restaurants
 	end
 
-private
-	def reservation_params
-		params.require(:reservation).permit(:email, :datetime, :message, :restaurant_id)
-	end
+	private
+		def reservation_params
+			params.require(:reservation).permit(:email, :datetime, :message, :restaurant_id)
+		end
 
-protected
 
-	def get_restaurant
-		@restaurant = Restaurant.find(params[:restaurant_id])
-	end
+	protected
+
+		def get_restaurant
+			@restaurant = Restaurant.find(params[:restaurant_id])
+		end
 
 end

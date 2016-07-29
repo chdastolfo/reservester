@@ -22,8 +22,7 @@ end
 
 def show
 	@restaurant = Restaurant.find(params[:id])
-	@reservation = Reservation.new
-	@reservation.restaurant = @restaurant
+	@reservations = Reservation.where(restaurant_id: params[:id])
 end
 
 def edit
@@ -41,7 +40,8 @@ def update
 end
 
 def destroy
-	@restaurants = current_user.restaurants.find(params[:id])
+	@restaurant = Restaurant.find(params[:id])
+	@restaurant.destroy
 	if @restaurant.destroy
 		flash[:danger] = "restaurant was deleted and stuff"
 	else

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   devise_for :users 
 
   resources :restaurants, :except => [:new, :create] do
-    resources :reservations, :only => [:new, :create]
+    resources :reservations, :only => [:create]
   end
 
   resources :users do

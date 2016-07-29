@@ -1,37 +1,21 @@
-<p>
+	</br>
 	<strong>Name:</strong>
-	<%= @restaurant.name %>
-</p>
-
-<p>
+	<%= @restaurant.name %></br> 
+	<strong>Category:</strong>
+	<%= @restaurant.categories.map{ |c| c.name }.join(", ") %></br>
 	<strong>Description:</strong>
-	<%= @restaurant.content %>
-</p>
-
-<p>
+	<%= @restaurant.content %></br>
 	<strong>Address:</strong>
-	<%= @restaurant.address %>
-</p>
+	<%= @restaurant.address %></br>
 
 <% if signed_in? %>
 	<h3>Reservations</h3>
 <% end %>
-<% if @reservation.restaurant.exists?(@reservation) %>
-	<% @reservation.restaurant do |reservation| %>
-		<tr>
-			<td><%= reservation.email %></td>
-			<td><%= reservation.datetime %></td>
-			<td><%= reservation.message %></td>
-		</tr>
-	<% end %>
-<% else %>
-	<% simple_form_for @reservation, html: { class: 'form-horizontal' } do |f| %>
-		<%= f.input :email %>
-		<%= f.input :datetime %>
-		<%= f.input :message %>
-		<%= f.button :submit %>
-	<% end %>
-<% end %>
+  <ul>
+	<%= render(@reservations) || "No reservations" %>
+  </ul>
+</br>
 
+<%= render 'reservations/form' %>
 
 <%= link_to 'Back', restaurants_path %>

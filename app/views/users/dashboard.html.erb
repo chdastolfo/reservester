@@ -11,10 +11,11 @@
                 <tr>
                     <b><%= link_to restaurant.name, restaurant_path(restaurant) %></b>
                 </br>
-                    | <%= link_to "Edit", edit_restaurant_path(restaurant) %>
+                  <%= link_to "Edit", edit_restaurant_path(restaurant) %>
                 </br>    
                     |<%= link_to "Delete", restaurant, method: :delete, data: { confirm: "Are you sure you want to remove this restaurant from the directory?"} %>
                 </tr>
+              </br>
           </span>
        </div>
                 <%- end %>
@@ -29,9 +30,6 @@
     
 
   <table class="table table-striped">
-    <tr>
-        <th>Name</th>
-    </tr>
     <% current_user.favorite_restaurants.each do |restaurant| %>
        </br>
         </br>
