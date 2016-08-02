@@ -8,6 +8,8 @@
 	<strong>Address:</strong>
 	<%= @restaurant.address %></br>
 
+<%= render 'map' %>
+
 <% if signed_in? %>
 	<h3>Reservations</h3>
 <% end %>
